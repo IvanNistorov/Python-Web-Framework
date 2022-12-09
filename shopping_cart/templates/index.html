@@ -1,0 +1,47 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <script src="{% static 'scripts/handle_on_click.js' %}" defer></script>
+    <title>Shop</title>
+</head>
+<body>
+<ul>
+    <li>
+        <a href="{% url 'logout' %}">Logout</a>
+    </li>
+    <li>
+        <a href="{% url 'display cart' username=user.username pk=user.pk %}">Cart</a>
+    </li>
+    <li>
+        <a href="{% url 'details profile' username=user.username pk=user.pk %}">Profile</a>
+    </li>
+    <li>
+        <a href="{% url 'home page' %}">Go to Shop</a>
+    </li>
+
+</ul>
+{% for product in products %}
+    <div class="card">
+        <img src="{{ product.image }}" alt="{{ product.product_type }}" style="width:60%">
+        <h1>{{ product.name }}</h1>
+        <p class="price">${{ product.price }}</p>
+        <p>{{ product.details }}</p>
+        <p>
+            <a href="{% url 'add items' product_id=product.pk %}">
+                <button>Add to Cart</button>
+            </a>
+
+        </p>
+    </div>
+{% endfor %}
+
+</body>
+</html>
+
+
+

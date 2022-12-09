@@ -1,0 +1,50 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <title>Shop</title>
+</head>
+<body>
+<ul>
+    <li>
+        <a href="{% url 'logout' %}">Logout</a>
+    </li>
+
+    <li>
+        <a href="{% url 'display cart' username=user.username pk=user.pk %}">Cart</a>
+    </li>
+    <li>
+        <a href="{% url 'details profile' username=user.username pk=user.pk %}">Profile</a>
+    </li>
+    <li>
+        <a href="{% url 'home page' %}">Go to Shop</a>
+    </li>
+
+</ul>
+
+
+<div class="card">
+    {% if not user.profile_picture %}
+        <img src="{% static 'images/no-image.jpg' %}" alt="John" style="width:60%">
+    {% else %}
+        <img src="{{ user.profile_picture }}" alt="John" style="width:60%">
+    {% endif %}
+
+    {% if user.get_full_name %}
+        <h1>{{ user.get_full_name }}</h1>
+    {% elif user.get_short_name %}
+        <h1>{{ user.get_short_name }}</h1>
+    {% endif %}
+    <p class="title">{{ user.email }}</p>
+    <p>{{ user.gender }}</p>
+    <p>
+        <button><a href="{% url 'edit profile' username=user.username pk=user.pk %}">Edit profile</a></button>
+    </p>
+</div>
+
+</body>
+</html>
