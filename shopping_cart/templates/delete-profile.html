@@ -26,10 +26,11 @@
 
 </ul>
 
-<form>
+<form method="post" action="{% url 'delete profile' username=request.user.username pk=request.user.pk %}">
     <div class="container">
         <h1>Delete Profile</h1>
         <button type="submit" class="registerbtn">Delete</button>
+        {% csrf_token %}
     </div>
 </form>
 

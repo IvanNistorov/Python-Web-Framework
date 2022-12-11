@@ -18,4 +18,5 @@ class Products(models.Model):
 
 class AddProductToUserCart(models.Model):
     product = models.ForeignKey(Products, on_delete=models.RESTRICT)
-    user = models.ForeignKey(UserModel, on_delete=models.RESTRICT)
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+

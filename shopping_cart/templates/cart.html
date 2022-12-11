@@ -29,15 +29,16 @@
 
 {% if cart_products %}
     {% for product in cart_products %}
-<div class="card">
-    <img src="{{ product.product.image }}" alt="{{ product.product.product_type }}" style="width:100%">
-    <h1>{{ product.product.name }}</h1>
-    <p class="price">${{ product.product.price }}</p>
-    <p>{{ product.product.details }}</p>
-    <a href="{% url 'delete item' product_id=product.pk %}">
-    <button>Delete product</button>
-    </a>
-</div>
+        <form method="post" action="{% url 'display cart' username=user.username pk=user.pk %}">
+            <div class="card">
+                <img src="{{ product.product.image }}" alt="{{ product.product.product_type }}" style="width:100%">
+                <h1>{{ product.product.name }}</h1>
+                <p class="price">${{ product.product.price }}</p>
+                <p>{{ product.product.details }}</p>
+                <button type="submit">Delete product</button>
+                {% csrf_token %}
+            </div>
+        </form>
     {% endfor %}
 {% endif %}
 

@@ -4,7 +4,6 @@ from django.db import models
 from django.core.validators import *
 
 
-
 def validate_alphabetical_letters(value):
     if not value.isalpha():
         raise ValidationError('Only letters allowed')

@@ -10,6 +10,11 @@
 </head>
 <body>
 <ul>
+    {% if object.is_superuser or object.is_staff %}
+        <li>
+            <a href="{% url "admin:index" %}">Admin Page</a>
+        </li>
+    {% endif %}
     <li>
         <a href="{% url 'logout' %}">Logout</a>
     </li>
@@ -34,13 +39,11 @@
         <img src="{{ user.profile_picture }}" alt="John" style="width:60%">
     {% endif %}
 
-    {% if user.get_full_name %}
-        <h1>{{ user.get_full_name }}</h1>
-    {% elif user.get_short_name %}
-        <h1>{{ user.get_short_name }}</h1>
-    {% endif %}
+    <h1>{{ name }}</h1>
     <p class="title">{{ user.email }}</p>
-    <p>{{ user.gender }}</p>
+    {% if user.gender %}
+        <p>{{ user.gender }}</p>
+    {% endif %}
     <p>
         <button><a href="{% url 'edit profile' username=user.username pk=user.pk %}">Edit profile</a></button>
     </p>
