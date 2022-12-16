@@ -23,30 +23,34 @@
         <a href="{% url 'display cart' username=user.username pk=user.pk %}">Cart</a>
     </li>
     <li>
-        <a href="{% url 'details profile' username=user.username pk=user.pk %}">Profile</a>
-    </li>
-    <li>
         <a href="{% url 'home page' %}">Go to Shop</a>
     </li>
+    <li>
+        <a href="{% url 'details profile' username=user.username pk=user.pk %}">Profile</a>
+    </li>
+
 
 </ul>
 
+<div id="profile_wrapper">
 
-<div class="card">
-    {% if not user.profile_picture %}
-        <img src="{% static 'images/no-image.jpg' %}" alt="John" style="width:60%">
-    {% else %}
-        <img src="{{ user.profile_picture }}" alt="John" style="width:60%">
-    {% endif %}
+    <div class="card">
+        {% if not user.profile_picture %}
+            <img src="{% static 'images/no-image.jpg' %}" alt="" style="width:60%">
+        {% else %}
+            <img src="{{ user.profile_picture }}" alt="" style="width:60%">
+        {% endif %}
 
-    <h1>{{ name }}</h1>
-    <p class="title">{{ user.email }}</p>
-    {% if user.gender %}
-        <p>{{ user.gender }}</p>
-    {% endif %}
-    <p>
-        <button><a href="{% url 'edit profile' username=user.username pk=user.pk %}">Edit profile</a></button>
-    </p>
+        <h1>{{ name }}</h1>
+        <p class="title">{{ user.email }}</p>
+        {% if user.gender %}
+            <p>{{ user.gender }}</p>
+        {% endif %}
+        <p>
+            <button><a href="{% url 'edit profile' username=user.username pk=user.pk %}">Edit profile</a></button>
+        </p>
+    </div>
+
 </div>
 
 </body>

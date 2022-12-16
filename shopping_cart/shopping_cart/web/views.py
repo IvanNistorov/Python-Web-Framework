@@ -28,6 +28,13 @@ def add_to_cart(request, product_id):
     return redirect('home page')
 
 
+def remove_from_cart(request, product_id):
+    item = AddProductToUserCart.objects.filter(id=product_id).get()
+    item.delete()
+
+    return redirect('display cart', username=request.user.username, pk=request.user.pk)
+
+
 class DeleteProductView(views.DeleteView):
     template_name = 'cart.html'
     model = AddProductToUserCart
@@ -44,6 +51,8 @@ class CartDetailsView(views.DetailView):
         context['cart_products'] = AddProductToUserCart.objects.all()
 
         return context
+
+
 
 
 class UserDeleteView(views.DeleteView):
@@ -82,3 +91,7 @@ class UserDetailsView(views.DetailView):
         context['name'] = self.get_name()
 
         return context
+
+
+def success_page(request):
+    return render(request, 'success.html')

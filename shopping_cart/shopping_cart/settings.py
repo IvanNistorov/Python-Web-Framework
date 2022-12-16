@@ -6,7 +6,10 @@ SECRET_KEY = 'django-insecure-lhtxl6=mo=^dyqbtq6!7*j_x61hi=#v7l$e6bmwutb+!cvf_5=
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,7 +23,6 @@ INSTALLED_APPS = [
     'shopping_cart.accounts'
 
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,7 +88,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 STATIC_URL = 'static/'
 

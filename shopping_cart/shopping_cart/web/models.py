@@ -20,3 +20,5 @@ class AddProductToUserCart(models.Model):
     product = models.ForeignKey(Products, on_delete=models.RESTRICT)
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.product.name} product_id-{self.product_id}'

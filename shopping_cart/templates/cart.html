@@ -6,7 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'styles/cart.css' %}">
     <title>Shop</title>
 </head>
 <body>
@@ -26,21 +27,151 @@
     </li>
 
 </ul>
+<script>
+   document.addEventListener('click', function(event)
+{
+     const operator = event.target.innerHTML;
+     const ADDITIONAL_VALUE = 1;
+     const MIN_VALUE = 0;
 
-{% if cart_products %}
-    {% for product in cart_products %}
-        <form method="post" action="{% url 'display cart' username=user.username pk=user.pk %}">
-            <div class="card">
-                <img src="{{ product.product.image }}" alt="{{ product.product.product_type }}" style="width:100%">
-                <h1>{{ product.product.name }}</h1>
-                <p class="price">${{ product.product.price }}</p>
-                <p>{{ product.product.details }}</p>
-                <button type="submit">Delete product</button>
-                {% csrf_token %}
+     if(operator === '-' || operator === "+"){
+
+         let counterElement = event.target.parentNode.children[1];
+         const lastCounterValue = event.target.parentNode.children[1].innerHTML;
+
+         const newCounterValue = operator === '-' ? Number(lastCounterValue) - ADDITIONAL_VALUE : Number(lastCounterValue) + ADDITIONAL_VALUE;
+
+         if(newCounterValue > MIN_VALUE ) {
+            counterElement.innerHTML = newCounterValue.toString();
+         }
+     }
+});
+</script>
+<div class="float-parent-element">
+    <div class="float-child-element">
+        {% if cart_products %}
+
+            <div class="CartContainer">
+            <div class="Header">
+                <h3 class="Heading">Shopping Cart</h3>
             </div>
-        </form>
-    {% endfor %}
-{% endif %}
+            {% for product in cart_products %}
+                <div class="Cart-Items">
+                    <div class="image-box">
+                        <img src="{{ product.product.image }}" style="height:80px;width:80px"/>
+                    </div>
+                    <div class="about">
+                        <h1 class="title">{{ product.product.name }}</h1>
+                        <h3 class="subtitle">{{ product.product.product_type }}</h3>
 
+                    </div>
+                    <div class="counter">
+                        <div class="btn">+</div>
+                        <div class="count">1</div>
+                        <div class="btn">-</div>
+                    </div>
+                    <div class="prices">
+                        <div class="amount">${{ product.product.price }}</div>
+                        <div class="remove"><a href="{% url 'remove item' product_id=product.pk %}">Remove</a></div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+        </div>
+    </div>
+    {#<div id="cart_wrapper">#}
+    {#{% if cart_products %}#}
+    {#    {% for product in cart_products %}#}
+    {##}
+    {#            <div class="card">#}
+    {#                <img src="{{ product.product.image }}" alt="{{ product.product.product_type }}" style="width:100%">#}
+    {#                <h1>{{ product.product.name }}</h1>#}
+    {#                <p class="price">${{ product.product.price }}</p>#}
+    {#                <p>{{ product.product.details }}</p>#}
+    {#                <a href="{% url 'remove item' product_id=product.pk %}">#}
+    {#                     <button>Delete product</button>#}
+    {#                </a>#}
+    {#            </div>#}
+    {##}
+    {#    {% endfor %}#}
+    {#{% endif %}#}
+    {#</div>#}
+</div>
+<div class="float-child-element">
+
+
+    <div class="row">
+        <div class="col-75">
+            <div class="container">
+                <form action="{% url 'display cart' username=user.username pk=user.pk %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-50">
+                            <h3>Billing Address</h3>
+                            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                            <input type="text" id="fname" name="firstname" placeholder="Enter Full Name">
+                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                            <input type="text" id="email" name="email" placeholder="Email address">
+                            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                            <input type="text" id="adr" name="address" placeholder="Address">
+                            <label for="city"><i class="fa fa-institution"></i> City</label>
+                            <input type="text" id="city" name="city" placeholder="City">
+
+                            <div class="row">
+                                <div class="col-50">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" name="state" placeholder="State">
+                                </div>
+                                <div class="col-50">
+                                    <label for="zip">Postal Code</label>
+                                    <input type="text" id="zip" name="zip" placeholder="Postal Code">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-50">
+                            <h3>Payment</h3>
+                            <label for="fname">Accepted Cards</label>
+                            <div class="icon-container">
+                                <i class="fa fa-cc-visa" style="color:navy;"></i>
+                                <i class="fa fa-cc-amex" style="color:blue;"></i>
+                                <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                                <i class="fa fa-cc-discover" style="color:orange;"></i>
+                            </div>
+                            <label for="cname">Card Name</label>
+                            <input type="text" id="cname" name="cardname" placeholder="Card Name">
+                            <label for="ccnum">Credit card number</label>
+                            <input type="text" id="ccnum" name="cardnumber" placeholder="Card Number">
+                            <label for="expmonth">Exp Month</label>
+                            <input type="text" id="expmonth" name="expmonth" placeholder="Exp Month">
+                            <div class="row">
+                                <div class="col-50">
+                                    <label for="expyear">Exp Year</label>
+                                    <input type="text" id="expyear" name="expyear" placeholder="Exp Year">
+                                </div>
+                                <div class="col-50">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" name="cvv" placeholder="CVV">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <label>
+                        <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+                    </label>
+                    <a href='/profile/success' class="btn-green">
+                        Continue to checkout
+                    </a>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
 </body>
 </html>
